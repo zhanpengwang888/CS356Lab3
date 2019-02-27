@@ -38,6 +38,8 @@ DEC(R6,1)
 ADD(R0,R6,R0) //set flags
 BZ(end) //done printing things if zero
 BR(next_screen) //otherwise print next thing
+
+
 LABEL(myputchar_ord) //print character currently held in r1
 INC(SP, 3)
 STORE(PC_ret,0,FP)

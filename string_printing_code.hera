@@ -1,5 +1,4 @@
 #define WROTE_CS_356_IO 1
-#include <Tiger-stdlib-reg-data.hera>
 
 DLABEL(s1)
 LP_STRING("Hello world")
@@ -20,7 +19,7 @@ BR(print_loop) //go print it
 
 LABEL(print_loop) //loop thru string to print all of it
 
-LOAD(R1, 0, R3) //Load next char to print
+LOAD(R1, 1, R3) //Load next char to print
 ADD(R0,R1,R0) //set flags
 BZ(after_print) //if next char empty, done printing
 
@@ -60,4 +59,3 @@ RETURN(FP_alt, PC_ret)
 LABEL(end)
 HALT()
 
-#include <Tiger-stdlib-reg.hera>

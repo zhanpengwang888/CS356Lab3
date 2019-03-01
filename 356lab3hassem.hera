@@ -1,0 +1,82 @@
+#define WROTE_CS_356_IO 1
+
+
+//Lab 3 part 1 code
+//Jordan Acker, Zhanpeng Wang, Kadan Lottick, Elizabeth Chan 
+
+//This program defines two LP strings, then prints one on one screen
+//and one on another screen, utilizing custom opcode for printing to a screen in logisim
+//It pulls down characters one at a time from RAM and prints successively
+
+DLABEL(s1)
+LP_STRING("Hello world")
+DSKIP(1)
+DLABEL(s2)
+LP_STRING("Hello from screen two")
+
+
+CBON()
+
+SET(r6,2) //counting downward things to be printed
+SET(R3, s1) //address of first thing to print
+BR(print_loop) //go print it
+
+LABEL(next_screen) //will get here when ready to print next thing
+SET(R3,s2) //address of next thing to print
+BR(print_loop) //go print it
+
+LABEL(print_loop) //loop thru string to print all of it
+
+LOAD(R1, 1, R3) //Load next char to print
+ADD(R0,R1,R0) //set flags
+BZ(after_print) //if next char empty, done printing
+
+MOVE(FP_alt, SP) //prep for call to our function
+
+MOVE(R2, R6) //R2 will represent which screen to print to
+DEC(R2, 1) //R2 will be zero for second string, 1 for first string
+
+
+CALL(FP_alt, myputchar_ord) //call print character function
+
+INC(R3,1) //ready to get next character
+BR(print_loop)
+
+
+LABEL(after_print)
+DEC(R6,1) 
+ADD(R0,R6,R0) //set flags
+BZ(end) //done printing things if zero
+BR(next_screen) //otherwise print next thing
+
+
+
+
+LABEL(myputchar_ord) //print character currently held in r1
+INC(SP, 3)
+STORE(PC_ret,0,FP)
+STORE(FP_alt, 1, FP)
+
+ADD(R0, R2, R0) //set flags for figuring out which screen
+BZ(screen1)
+
+LABEL(screen0)
+OPCODE(0x2410) // for printing to screen 0
+BR(after_screens)
+
+LABEL(screen1)
+OPCODE(0x2411) //for printing to screen 1
+BR(after_screens)
+
+LABEL(after_screens)
+
+LOAD(PC_ret, 0, FP)
+LOAD(FP_alt, 1, FP)
+DEC(SP,3)
+RETURN(FP_alt, PC_ret)
+
+
+
+LABEL(end)
+HALT()
+

@@ -11,8 +11,7 @@ A github repo for CS356 Lab3
 Require git to exist and be usable before any work is actually done (except for the design document)
 Require polling be submitted first, perhaps a week or two before interrupts are due
 
-### Contents/Links: System requirements; Design options; workflow; Lab requirements; Grading
-The requirements for the operation of the system are:
+### The requirements for the operation of the system are:
 The HERA system must include at least two keyboards and two screens, in addition to the CPU, instruction ROM, and data RAM from CMSC 240. The keyboards, screens, ROM, and RAM should be visible when viewing the "top level" circuit, i.e., without opening any modules.
 
 

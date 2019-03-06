@@ -61,10 +61,9 @@ Once you have created this repository, send email with its name to davew@cs.have
 
   # at this point, you should be able to connect as if to lab starter files
 ```
+- Have your hardware and software teams meet to test the combination of hardware and software; debug and (if necessary) update your design, and get the system working before moving on to address input. Your goal here should be to implement putchar_ord and also write a main demo/test program that calls it once or twice for specific values you've put in registers, and then has a loop to print all characters in a string (defined via LP_STRING).
 
-Have your hardware and software teams meet to test the combination of hardware and software; debug and (if necessary) update your design, and get the system working before moving on to address input. Your goal here should be to implement putchar_ord and also write a main demo/test program that calls it once or twice for specific values you've put in registers, and then has a loop to print all characters in a string (defined via LP_STRING).
-
-After you have output working, design and implement the input system; if you are feeling ambitious, you are allowed to go straight to an interrupt-based system, but I recommend you start with a polling-based system, commit a partial-credit result with some very specific comment such as "polling approach working now", and then revise your design and implementation to make use of interrupts.
+- After you have output working, design and implement the input system; if you are feeling ambitious, you are allowed to go straight to an interrupt-based system, but I recommend you start with a polling-based system, commit a partial-credit result with some very specific comment such as "polling approach working now", and then revise your design and implementation to make use of interrupts.
 
 ### The requirements for performing this lab are as follows:
 - Form a team of 2-4 students who agree to work together on Hardware or Software. One important attribute of a good team is a set of schedules that are similar enough to allow work at the same time. Note: your professor may instead choose to assign teams rather than have students self-organize.
@@ -72,12 +71,9 @@ After you have output working, design and implement the input system; if you are
 - Note that your professor will play two roles:
    - As customer, will only be satisfied (and grade for 100% on the "system works" points for either team) if the combined system actually works (send email with the subject line "Message for Lab 3 customer" to communicate about any issues relevant to your customer).
    - As "upper-management", can serve as a resource if you are having communication or collaboration issues within or between teams (send email with the subject line "Message for Lab 3 senior management" to communicate about any issues relevant to senior management, e.g. if there is some reason the teams can't work smoothly together. Note that upper management does not want to become involved in the details of problems, but will do so if necessary).
-
-Implement your part of the design (i.e., the hardware or software), and, as needed meet with the other teams to clarify/update your specification. All teams must agree to updates to the specification, as well as the original document. Each team member must actually do some "hands-on" work on some element(s) of the system implementation (as well as understand all elements of their team's contribution and the co-design specification).
-
-Together with each collaborating team, test your complete system, debug as necessary, and update the specification if needed (only after communication and agreement with any other team(s) involved).
-
-Ensure that you and all other members of your team have a detailed understanding of your part of the system and the shared specification … your grade will depend primarily on the completeness and correctness of your working system, and also in part on your ability to describe the system and specification, and on the ability of your teammates to describe these things.
+- Implement your part of the design (i.e., the hardware or software), and, as needed meet with the other teams to clarify/update your specification. All teams must agree to updates to the specification, as well as the original document. Each team member must actually do some "hands-on" work on some element(s) of the system implementation (as well as understand all elements of their team's contribution and the co-design specification).
+- Together with each collaborating team, test your complete system, debug as necessary, and update the specification if needed (only after communication and agreement with any other team(s) involved).
+- Ensure that you and all other members of your team have a detailed understanding of your part of the system and the shared specification … your grade will depend primarily on the completeness and correctness of your working system, and also in part on your ability to describe the system and specification, and on the ability of your teammates to describe these things.
 
 ### Grading details:
 - 90% for the design and functionality of your complete system:

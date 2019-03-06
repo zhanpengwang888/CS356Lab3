@@ -12,10 +12,8 @@ Require git to exist and be usable before any work is actually done (except for 
 Require polling be submitted first, perhaps a week or two before interrupts are due
 
 ### The requirements for the operation of the system are:
-The HERA system must include at least two keyboards and two screens, in addition to the CPU, instruction ROM, and data RAM from CMSC 240. The keyboards, screens, ROM, and RAM should be visible when viewing the "top level" circuit, i.e., without opening any modules.
-
-
-It must be possible for a HERA program to call a function putchar_ord to print one character on one screen (the function should take two parameters, the first of which identifies which screen, and the second of which is the ASCII code of the character to be printed … you are only responsible for the characters that Logisim handles correctly). To avoid conflicts with the standard library for HERA, put the following line in your HERA program before any #include of that library or its data:
+- The HERA system must include at least two keyboards and two screens, in addition to the CPU, instruction ROM, and data RAM from CMSC 240. The keyboards, screens, ROM, and RAM should be visible when viewing the "top level" circuit, i.e., without opening any modules.
+- It must be possible for a HERA program to call a function putchar_ord to print one character on one screen (the function should take two parameters, the first of which identifies which screen, and the second of which is the ASCII code of the character to be printed … you are only responsible for the characters that Logisim handles correctly). To avoid conflicts with the standard library for HERA, put the following line in your HERA program before any #include of that library or its data:
     ```
     #define  WROTE_CS356_IO 1
     ```
@@ -24,18 +22,14 @@ It must be possible for a HERA program to call a function getchar_ord to read a 
     ```
     #define  WROTE_CS356_IO 1
     ```
-
-
-Your system should work for any correct HERA program that uses calls to getchar_ord and putchar_ord to do input and output, and, in particular, for demo purposes include the test program described in the next bullet item. Additionally, any legal HERA program that does not do I/O (or try to store data in the addresses used for memory-mapped I/O, if you choose that option) must still function as it would have without you modifications for this lab (so, for example, you can't decide not to have an "ADD" instruction any more, or just to have 4 registers … don't break existing features).
-
-
-### You should provide a demonstration test program that does the following:
-- The program first prints greetings to both terminals, with "hi" going to terminal 1 and something else ("hello", or a brief greeting in some other language) going to terminal 2. The H and the i should be placed in a register with SET (or SETLO); the characters from the second greeting should be extracted from a string defined with a DLABEL/LP_STRING definition in the data segment. When you're developing/debugging output, you may want to have a HALT( ) right after these to steps, so you can get output working before attempting input.
-- The program then does some computation that takes a few seconds. Possibly the user types something at this point.
-- The program then reads characters from keyboard 1 and prints them immediately to screen 1, until it gets a newline or return.
-- The program then reads characters from keyboard 2, without immediately showing them, until the input character is a newline or linefeed. After reading the newline/linefeed, it prints the entire line to screen 2, but with all lower-case letters converted to upper-case, and prints the original line, with all characters that aren't numerals or letters replaced by underscores, to screen 1.
-- The program then enters a loop in which it checks each keyboard to see if it has a character, and if so, prints that character to both screens, but with all letters from keyboard 1 showing up in upper-case on both terminals, and all letters from keyboard 2 showing up in lower-case on both terminals.
-- See this [Python test program](https://docs.google.com/document/d/1GwSVHJzAqS8MlTPDZCcd7VHrWiF4_Jt_5j-yH3Z3Bn8) for an example of what's needed for the demo 
+-Your system should work for any correct HERA program that uses calls to getchar_ord and putchar_ord to do input and output, and, in particular, for demo purposes include the test program described in the next bullet item. Additionally, any legal HERA program that does not do I/O (or try to store data in the addresses used for memory-mapped I/O, if you choose that option) must still function as it would have without you modifications for this lab (so, for example, you can't decide not to have an "ADD" instruction any more, or just to have 4 registers … don't break existing features).
+- You should provide a demonstration test program that does the following:
+  - The program first prints greetings to both terminals, with "hi" going to terminal 1 and something else ("hello", or a brief greeting in some other language) going to terminal 2. The H and the i should be placed in a register with SET (or SETLO); the characters from the second greeting should be extracted from a string defined with a DLABEL/LP_STRING definition in the data segment. When you're developing/debugging output, you may want to have a HALT( ) right after these to steps, so you can get output working before attempting input.
+  - The program then does some computation that takes a few seconds. Possibly the user types something at this point.
+  - The program then reads characters from keyboard 1 and prints them immediately to screen 1, until it gets a newline or return.
+  - The program then reads characters from keyboard 2, without immediately showing them, until the input character is a newline or linefeed. After reading the newline/linefeed, it prints the entire line to screen 2, but with all lower-case letters converted to upper-case, and prints the original line, with all characters that aren't numerals or letters replaced by underscores, to screen 1.
+  - The program then enters a loop in which it checks each keyboard to see if it has a character, and if so, prints that  character to both screens, but with all letters from keyboard 1 showing up in upper-case on both terminals, and all letters from keyboard 2 showing up in lower-case on both terminals.
+  - See this [Python test program](https://docs.google.com/document/d/1GwSVHJzAqS8MlTPDZCcd7VHrWiF4_Jt_5j-yH3Z3Bn8) for an example of what's needed for the demo 
 
 
 ### For full credit (see below), the system must also do the following (interrupt-based I/O is the way you can ensure these):

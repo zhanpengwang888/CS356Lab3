@@ -4,6 +4,7 @@
 //Lab 3 part 2 code
 //Jordan Acker, Zhanpeng Wang, Kadan Lottick, Elizabeth Chan 
 
+CBON()
 
 //SET(R7, 100)
 
@@ -23,7 +24,7 @@ LABEL(get_loop)
 MOVE(FP_alt, SP)
 SET(R2, 1) //get from scr0
 CALL(FP_alt, mygetchar_ord)
-ADD(R0, R1, R0)
+CMP(R0, R1)
 BZ(done_getting)
 STORE(R1, 0, R5)
 INC(R5, 1)

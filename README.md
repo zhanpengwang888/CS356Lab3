@@ -1,8 +1,4 @@
-# CS356Lab3
-A github repo for CS356 Lab3
-
-
-# Lab 3: Co-Design of an I/O System
+# CS356 Lab 3: Co-Design of an I/O System
 ###### Jordan Acker, Zhanpeng Wang, Kadan Lottick, Elizabeth Chan 
 
 ## In this lab, you will work as part of a team, to extend the HERA hardware to include connections to command-line terminals, with software to demonstrate input and output of characters. It will give you a chance to explore the collaboration features of git, as well as work on a Co-Design project and learn about hardware and operating systems.

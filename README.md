@@ -18,7 +18,7 @@ Require polling be submitted first, perhaps a week or two before interrupts are 
     #define  WROTE_CS356_IO 1
     ```
 
-It must be possible for a HERA program to call a function getchar_ord to read a character from either keyboard (this function should take a parameter identifying which keyboard is to be used, and should return the ASCII code of the character entered), and also to have some way to determine whether input is ready (either some other function, or some special option for getchar_ord, or whatever you like; but note that the usual behavior of getchar_ord is not to return until the user has provided a character). To avoid conflicts with the standard library for HERA, put the following line in your HERA program before any #include of that library or its data:
+- It must be possible for a HERA program to call a function getchar_ord to read a character from either keyboard (this function should take a parameter identifying which keyboard is to be used, and should return the ASCII code of the character entered), and also to have some way to determine whether input is ready (either some other function, or some special option for getchar_ord, or whatever you like; but note that the usual behavior of getchar_ord is not to return until the user has provided a character). To avoid conflicts with the standard library for HERA, put the following line in your HERA program before any #include of that library or its data:
     ```
     #define  WROTE_CS356_IO 1
     ```

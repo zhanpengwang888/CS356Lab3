@@ -82,7 +82,7 @@ BZ(done_getting)
 STORE(R1, 0, R5)
 
 SET(R8, 32)
-XOR(R1, R1, R2) //NEED TO MAKE THIS ONLY GO LOWER TO UPPER
+XOR(R1, R1, R8) //NEED TO MAKE THIS ONLY GO LOWER TO UPPER
 STORE(R1, 0, R7)
 
 INC(R5, 1)
@@ -94,7 +94,7 @@ LABEL(done_getting)
 
 
 LABEL(print_loop) //loop thru string to print all of it
-LOAD(R1, 0, R4) //Load next char to print
+LOAD(R1, 0, R3) //Load next char to print
 ADD(R0,R1,R0) //set flags
 BZ(after_print) //if next char empty, done printing
 MOVE(FP_alt, SP) //prep for call to our function

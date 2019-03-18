@@ -17,22 +17,22 @@ CBON()
 //THIS PART PRINTS THE GREETING MESSAGES
 SET(r6,2) //counting downward things to be printed
 SET(R3, s1) //address of first thing to print
-BR(print_loop) //go print it
+BR(print_loop_greeting) //go print it
 LABEL(next_screen) //will get here when ready to print next thing
 SET(R3,s2) //address of next thing to print
-BR(print_loop) //go print it
-LABEL(print_loop) //loop thru string to print all of it
+BR(print_loop_greeting) //go print it
+LABEL(print_loop_greeting) //loop thru string to print all of it
 LOAD(R1, 1, R3) //Load next char to print
 ADD(R0,R1,R0) //set flags
-BZ(after_print) //if next char empty, done printing
+BZ(after_print_greeting) //if next char empty, done printing
 MOVE(FP_alt, SP) //prep for call to our function
 MOVE(R2, R6) //R2 will represent which screen to print to
 DEC(R2, 1) //R2 will be zero for second string, 1 for first string
 CALL(FP_alt, myputchar_ord) //call print character function
 INC(R3,1) //ready to get next character
-BR(print_loop)
+BR(print_loop_greeting)
 
-LABEL(after_print)
+LABEL(after_print_greeting)
 DEC(R6,1)
 ADD(R0,R6,R0) //set flags
 BZ(continue) //done printing things if zero
@@ -100,7 +100,7 @@ BZ(after_print) //if next char empty, done printing
 MOVE(FP_alt, SP) //prep for call to our function
 SET(R2, 0) //print to scr1 
 CALL(FP_alt, myputchar_ord) //call print character function
-INC(R4,1) //ready to get next character
+INC(R3,1) //ready to get next character
 BR(print_loop)
 LABEL(after_print)
 
@@ -148,14 +148,14 @@ INC(SP, 3)
 STORE(PC_ret,0,FP)
 STORE(FP_alt, 1, FP)
 ADD(R0, R2, R0) //set flags for figuring out which screen
-BZ(screen1)
-LABEL(screen0)
+BZ(screen1_get)
+LABEL(screen0_get)
 OPCODE(0x2510) // for getting from screen 0
-BR(after_screens)
-LABEL(screen1)
+BR(after_screens_get)
+LABEL(screen1_get)
 OPCODE(0x2511) //for getting from screen 1
-BR(after_screens)
-LABEL(after_screens)
+BR(after_screens_get)
+LABEL(after_screens_get)
 LOAD(PC_ret, 0, FP)
 LOAD(FP_alt, 1, FP)
 DEC(SP,3)

@@ -1,0 +1,232 @@
+#define WROTE_CS_356_IO 1
+//#include <Tiger-stdlib-reg-data.hera>
+
+//Lab 4 hera code
+//Jordan Acker, Zhanpeng Wang, Kadan Lottick, Elizabeth Chan 
+
+DLABEL(s1)
+LP_STRING("Hi\n")
+DSKIP(1)
+DLABEL(s2)
+LP_STRING("Hello from screen two\n")
+
+
+CBON()
+
+
+//THIS PART PRINTS THE GREETING MESSAGES
+SET(R6,0) //counting things to be printed
+SET(R8, 2)
+SET(R3, s1) //address of first thing to print
+BR(print_loop_greeting) //go print it
+LABEL(next_screen) //will get here when ready to print next thing
+SET(R3,s2) //address of next thing to print
+BR(print_loop_greeting) //go print it
+LABEL(print_loop_greeting) //loop thru string to print all of it
+LOAD(R1, 1, R3) //Load next char to print
+CMP(R0, R1) //set flags
+BZ(after_print_greeting) //if next char empty, done printing
+MOVE(FP_alt, SP) //prep for call to our function
+MOVE(R2, R6) //R2 will represent which screen to print to
+CALL(FP_alt, myputchar_ord) //call print character function
+INC(R2, 1) //R2 will be zero for first string, 1 for second string
+
+INC(R3,1) //ready to get next character
+BR(print_loop_greeting)
+
+LABEL(after_print_greeting)
+INC(R6,1)
+CMP(R8, R6) //set flags
+BZ(polling_loop) //done printing things if zero
+BR(next_screen) //otherwise print next thing
+
+
+
+
+LABEL(polling_loop) //main section of program
+
+//registers will track memory locations of stored characters
+SET(R3, 1000)
+SET(R4, 1000)
+SET(R5, 2000)
+SET(R6, 2000)
+
+
+LABEL(polling_loop_keep_counters) //used when we want to keep input for next loop
+
+//THIS PART PROVIDES COMPUTATION ALLOWING USER TO ENTER INPUT
+SET(R7, 50) //adjust this value to compute for right amount of time
+
+LABEL(computation)
+DEC(R7, 1)
+ADD(R0, R7, R0)
+BS(aft)
+BR(computation)
+LABEL(aft)
+
+
+LABEL(printfrom1)
+//THIS PART DOES AN IMMEDIATE GET AND PRINT WITH KEYBOARD0 CHARS
+MOVE(FP_alt, SP)
+SET(R2, 0) //get from scr0
+CALL(FP_alt, mygetchar_ord) //get character
+CMP(R1, R0) //don't print anything if no characters
+BZ(printfrom2)
+MOVE(FP_alt, SP)
+CALL(FP_alt, myputchar_ord) //print that character
+CMP(R0, R1) //see if there are more characters
+BZ(no_more_chars)
+BR(printfrom1)
+LABEL(no_more_chars)
+//print newline at the end
+SET(R1, 10)
+MOVE(FP_alt, SP)
+CALL(FP_alt, myputchar_ord)
+
+LABEL(printfrom2)
+//THIS PART GETS FROM KEYBOARD1 AND PRINTS WHEN IT SEES NEWLINES
+
+LABEL(get_loop)
+MOVE(FP_alt, SP)
+SET(R2, 1) //get from scr1
+CALL(FP_alt, mygetchar_ord) //get character
+CMP(R0, R1)
+BZ(polling_loop_keep_counters) //if no more characters and no newline, no printing but keep input in mem
+SET(R8, 10) //10 is ASCII for newline, checking if char is one
+CMP(R1, R8)
+BZ(done_getting) //newline found, stop taking input and go print
+STORE(R1, 0, R4) //store unchanged characters for future printing
+
+
+//SWAP lower case to upper case for future printing to screen1
+
+SET(R8, 97)
+CMP(R1, R8)
+BS(skipcaseswitch)
+SET(R8, 122)
+CMP(R8, R1)
+BS(skipcaseswitch)
+SET(R8, 32)
+XOR(R1, R1, R8)
+LABEL(skipcaseswitch)
+
+STORE(R1, 0, R6) //store swapped case chars for future printing
+//increment memory pointers
+INC(R4, 1)
+INC(R6, 1)
+BR(get_loop) 
+
+LABEL(done_getting)
+//store the newline
+STORE(R1, 0, R4)
+STORE(R1, 0, R6)
+
+
+//PRINTS ALL OF CASE-SWAPPED STRING TO SCREEN1
+LABEL(print_loop) 
+LOAD(R1, 0, R5) //Load next char to print
+SET(R8, 10)
+CMP(R8, R1) //set flags
+BZ(after_print) //if next char newline, done printing
+MOVE(FP_alt, SP) //prep for call to our function
+SET(R2, 1) //we want to print to scr1 
+CALL(FP_alt, myputchar_ord) //call print character function
+INC(R5,1) //ready to get next character
+BR(print_loop)
+LABEL(after_print)
+//print the newline at the end
+MOVE(FP_alt, SP)
+CALL(FP_alt, myputchar_ord)
+
+//PRINTS ALL OF STRING TO SCREEN0 WITH UNDERSCORES REPLACING NON-LETTERS OR NUMBERS
+LABEL(print_loop2) 
+LOAD(R1, 0, R3) //Load next char to print
+SET(R8, 10)
+CMP(R8, R1) //set flags
+BZ(after_print2) //if next char empty, done printing
+MOVE(FP_alt, SP) //prep for call to our function
+SET(R2, 0) //print to scr0
+
+//Logic to determine whether to swap for underscore or not
+SET(R8, 48)
+CMP(R1, R8)
+BS(underscore)
+SET(R8, 58)
+CMP(R1, R8)
+BS(skipunderscore)
+SET(R8, 65)
+CMP(R1, R8)
+BS(underscore)
+SET(R8, 91)
+CMP(R1, R8)
+BS(skipunderscore)
+SET(R8, 97)
+CMP(R1, R8)
+BS(underscore)
+SET(R8, 123)
+CMP(R1, R8)
+BS(skipunderscore)
+
+LABEL(underscore)
+SET(R1, 95) //ASCII For underscore
+LABEL(skipunderscore)
+
+CALL(FP_alt, myputchar_ord) //call print character function
+INC(R3,1) //ready to get next character
+BR(print_loop2)
+LABEL(after_print2)
+//print the newline at the end
+MOVE(FP_alt, SP)
+CALL(FP_alt, myputchar_ord)
+
+
+BR(polling_loop)
+
+
+
+BR(end1)
+LABEL(myputchar_ord) //print character currently held in r1
+INC(SP, 3)
+STORE(PC_ret,0,FP)
+STORE(FP_alt, 1, FP)
+ADD(R0, R2, R0) //set flags for figuring out which screen
+BZ(screen0)
+LABEL(screen1)
+OPCODE(0x2411) // for printing to screen 1
+BR(after_screens)
+LABEL(screen0)
+OPCODE(0x2410) //for printing to screen 0
+BR(after_screens)
+LABEL(after_screens)
+LOAD(PC_ret, 0, FP)
+LOAD(FP_alt, 1, FP)
+DEC(SP,3)
+RETURN(FP_alt, PC_ret)
+LABEL(end1)
+
+
+BR(after_all)
+LABEL(mygetchar_ord)
+INC(SP, 3)
+STORE(PC_ret,0,FP)
+STORE(FP_alt, 1, FP)
+ADD(R0, R2, R0) //set flags for figuring out which screen
+BZ(screen0_get)
+LABEL(screen1_get)
+OPCODE(0x2511) // for getting from screen 1
+BR(after_screens_get)
+LABEL(screen0_get)
+OPCODE(0x2510) //for getting from screen 0
+BR(after_screens_get)
+LABEL(after_screens_get)
+LOAD(PC_ret, 0, FP)
+LOAD(FP_alt, 1, FP)
+DEC(SP,3)
+RETURN(FP_alt, PC_ret)
+LABEL(after_all)
+
+
+HALT()
+
+//#include <Tiger-stdlib-reg.hera>
+

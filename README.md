@@ -1,4 +1,4 @@
-# CS356 Lab 3: Co-Design of an I/O System
+# CS356 Lab 3 and 4: Polling I/O System
 ###### Jordan Acker, Zhanpeng Wang, Kadan Lottick, Elizabeth Chan 
 
 Processor supports specialized instruction i/o with opcode 0x25[r][s] for getchar_ord and 0x24[r][s] for putchar_ord, where r is the register to pull into or print from, and s is the keyboard or screen to pull from or print to.

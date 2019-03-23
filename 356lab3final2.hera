@@ -64,24 +64,32 @@ BS(aft)
 BR(computation)
 LABEL(aft)
 
-
+SET(R8, 0) //bool for whether loop has iterated more than once
 LABEL(printfrom1)
 //THIS PART DOES AN IMMEDIATE GET AND PRINT WITH KEYBOARD0 CHARS
 MOVE(FP_alt, SP)
 SET(R2, 0) //get from scr0
 CALL(FP_alt, mygetchar_ord) //get character
 CMP(R1, R0) //don't print anything if no characters
-BZ(printfrom2)
+BZ(choose_branch) //if no character, done printing
 MOVE(FP_alt, SP)
 CALL(FP_alt, myputchar_ord) //print that character
-CMP(R0, R1) //see if there are more characters
-BZ(no_more_chars)
+SET(R8, 1)
 BR(printfrom1)
 LABEL(no_more_chars)
 //print newline at the end
 SET(R1, 10)
 MOVE(FP_alt, SP)
 CALL(FP_alt, myputchar_ord)
+
+
+BR(skip_choose)
+//determine whether anything was typed so we know whether to print newline
+LABEL(choose_branch)
+CMP(R8, R0)
+BZ(printfrom2)
+BR(no_more_chars)
+LABEL(skip_choose)
 
 LABEL(printfrom2)
 //THIS PART GETS FROM KEYBOARD1 AND PRINTS WHEN IT SEES NEWLINES

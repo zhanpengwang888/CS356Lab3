@@ -1,0 +1,58 @@
+LABEL(printfrom1)
+//THIS PART DOES AN IMMEDIATE GET AND PRINT WITH KEYBOARD0 CHARS
+MOVE(FP_alt, SP)
+SET(R2, 0) //get from scr0
+CALL(FP_alt, mygetchar_ord) //get character
+CMP(R1, R0) //don't print anything if no characters
+BZ(interrupt_done) //if no character, done printing
+MOVE(FP_alt, SP)
+CALL(FP_alt, myputchar_ord) //print that character
+BR(printfrom1)
+LABEL(interrupt_done)
+
+
+
+BR(end1)
+LABEL(myputchar_ord) //print character currently held in r1
+INC(SP, 3)
+STORE(PC_ret,0,FP)
+STORE(FP_alt, 1, FP)
+ADD(R0, R2, R0) //set flags for figuring out which screen
+BZ(screen0)
+LABEL(screen1)
+OPCODE(0x2411) // for printing to screen 1
+BR(after_screens)
+LABEL(screen0)
+OPCODE(0x2410) //for printing to screen 0
+BR(after_screens)
+LABEL(after_screens)
+LOAD(PC_ret, 0, FP)
+LOAD(FP_alt, 1, FP)
+DEC(SP,3)
+RETURN(FP_alt, PC_ret)
+LABEL(end1)
+
+
+BR(after_all)
+LABEL(mygetchar_ord)
+INC(SP, 3)
+STORE(PC_ret,0,FP)
+STORE(FP_alt, 1, FP)
+ADD(R0, R2, R0) //set flags for figuring out which screen
+BZ(screen0_get)
+LABEL(screen1_get)
+OPCODE(0x2511) // for getting from screen 1
+BR(after_screens_get)
+LABEL(screen0_get)
+OPCODE(0x2510) //for getting from screen 0
+BR(after_screens_get)
+LABEL(after_screens_get)
+LOAD(PC_ret, 0, FP)
+LOAD(FP_alt, 1, FP)
+DEC(SP,3)
+RETURN(FP_alt, PC_ret)
+LABEL(after_all)
+
+
+HALT()
+
